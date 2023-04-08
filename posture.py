@@ -25,7 +25,6 @@ while True:
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-
     lm = keypoints.pose_landmarks
     lmPose = mp_pose.PoseLandmark
 
@@ -56,7 +55,7 @@ while True:
     pink = (255, 0, 255)
     text = str(int(offset))
     font = cv2.FONT_HERSHEY_SIMPLEX
-    org=(w - 150, 30)
+    org = (w - 150, 30)
 
     thickness=2
     fontScale=0.9
@@ -74,11 +73,9 @@ while True:
 
     cv2.circle(image, (l_shldr_x, l_shldr_y), 7, yellow, -1)
     cv2.circle(image, (l_ear_x, l_ear_y), 7, yellow, -1)
-
     cv2.circle(image, (l_shldr_x, l_shldr_y - 100), 7, yellow, -1)
     cv2.circle(image, (r_shldr_x, r_shldr_y), 7, pink, -1)
     cv2.circle(image, (l_hip_x, l_hip_y), 7, yellow, -1)
-
     cv2.circle(image, (l_hip_x, l_hip_y - 100), 7, yellow, -1)
 
     angle_text_string = 'Neck : ' + str(int(neck_inclination)) + '  Torso : ' + str(int(torso_inclination))
@@ -100,7 +97,6 @@ while True:
         cv2.line(image, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), green, 2)
         cv2.line(image, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), green, 2)
         cv2.line(image, (l_hip_x, l_hip_y), (l_hip_x, l_hip_y - 100), green, 2)
-
     else:
         good_frames = 0
         bad_frames += 1
