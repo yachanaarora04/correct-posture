@@ -57,8 +57,8 @@ while True:
     font = cv2.FONT_HERSHEY_SIMPLEX
     org = (w - 150, 30)
 
-    thickness=2
-    fontScale=0.9
+    thickness = 2
+    fontScale = 0.9
 
     cv2.putText(image, str(int(fps)), (18, 78), cv2.FONT_HERSHEY_PLAIN, 3,(255, 0, 255), 3)
 
@@ -92,7 +92,7 @@ while True:
         cv2.putText(image, angle_text_string, (10, 30), font, 0.9, light_green, 2)
         cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.9, light_green, 2)
         cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.9, light_green, 2)
-
+        
         cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), green, 2)
         cv2.line(image, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), green, 2)
         cv2.line(image, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), green, 2)
