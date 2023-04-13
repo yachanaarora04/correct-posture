@@ -2,6 +2,7 @@ import cv2
 import time
 import math as m
 import mediapipe as mp
+from os import system
 
 cap = cv2.VideoCapture(0)
 
@@ -24,6 +25,7 @@ while True:
     keypoints = pose.process(image)
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
 
     lm = keypoints.pose_landmarks
     lmPose = mp_pose.PoseLandmark
@@ -55,10 +57,10 @@ while True:
     pink = (255, 0, 255)
     text = str(int(offset))
     font = cv2.FONT_HERSHEY_SIMPLEX
-    org = (w - 150, 30)
+    org=(w - 150, 30)
 
-    thickness = 2
-    fontScale = 0.9
+    thickness=2
+    fontScale=0.9
 
     cv2.putText(image, str(int(fps)), (18, 78), cv2.FONT_HERSHEY_PLAIN, 3,(255, 0, 255), 3)
 
@@ -73,9 +75,11 @@ while True:
 
     cv2.circle(image, (l_shldr_x, l_shldr_y), 7, yellow, -1)
     cv2.circle(image, (l_ear_x, l_ear_y), 7, yellow, -1)
+
     cv2.circle(image, (l_shldr_x, l_shldr_y - 100), 7, yellow, -1)
     cv2.circle(image, (r_shldr_x, r_shldr_y), 7, pink, -1)
     cv2.circle(image, (l_hip_x, l_hip_y), 7, yellow, -1)
+
     cv2.circle(image, (l_hip_x, l_hip_y - 100), 7, yellow, -1)
 
     angle_text_string = 'Neck : ' + str(int(neck_inclination)) + '  Torso : ' + str(int(torso_inclination))
@@ -85,18 +89,19 @@ while True:
 
     good_frames = 0
     bad_frames = 0
-    if neck_inclination < 40 and torso_inclination < 10:
+    if neck_inclination < 30 and torso_inclination < 10:
         bad_frames = 0
         good_frames += 1
 
         cv2.putText(image, angle_text_string, (10, 30), font, 0.9, light_green, 2)
         cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.9, light_green, 2)
         cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.9, light_green, 2)
-        
+
         cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), green, 2)
         cv2.line(image, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), green, 2)
         cv2.line(image, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), green, 2)
         cv2.line(image, (l_hip_x, l_hip_y), (l_hip_x, l_hip_y - 100), green, 2)
+
     else:
         good_frames = 0
         bad_frames += 1
@@ -109,6 +114,7 @@ while True:
         cv2.line(image, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), red, 2)
         cv2.line(image, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), red, 2)
         cv2.line(image, (l_hip_x, l_hip_y), (l_hip_x, l_hip_y - 100), red, 2)
+        system('say Bad Posture')
 
     good_time = (1 / fps) * good_frames
     bad_time = (1 / fps) * bad_frames
@@ -125,4 +131,6 @@ while True:
 
     cv2.imshow("image", image)
     cv2.waitKey(1)
+
+
 
